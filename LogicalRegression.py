@@ -31,7 +31,7 @@ def logistic_regression(sample_size,data_df):
     # In[26]:
 
     t0 = time()
-    vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5)
+    vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.75,binary= False,smooth_idf = False,norm='l2')
     vectorizer.fit(training_data)
     print("tf-idf learning time:", time() - t0)
     result_time['tf_idf'] = time() - t0
@@ -57,20 +57,13 @@ def logistic_regression(sample_size,data_df):
     print('testing',testing_matrix.shape)
 
 
-    # In[30]:
-
-    training_vector = training_matrix.toarray()
-    testing_vector = testing_matrix.toarray()
-    result['vector_size'] = len(training_vector[0])
-
-
     # ## Classification by Logistic Regression of Scikit Learn
 
     # In[31]:
 
     t0 = time()
-    logreg = linear_model.LogisticRegression(C=1e5)
-    logreg.fit(training_vector,training_label)
+    logreg = linear_model.LogisticRegression(C=100000.0)
+    logreg.fit(training_matrix,training_label)
     print('Logistic Regression time:',time()-t0)
     result_time['training_classifer'] = time() - t0
 
@@ -78,7 +71,7 @@ def logistic_regression(sample_size,data_df):
     # In[32]:
 
     t0 = time()
-    predicted_result = logreg.predict(testing_vector)
+    predicted_result = logreg.predict(testing_matrix)
     print("testing time:", time()-t0)
     result_time['test_classifier'] = time() - t0
 
