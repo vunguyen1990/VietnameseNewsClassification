@@ -55,6 +55,10 @@ def logistic_regression(sample_size,data_df):
 
     print('training',training_matrix.shape)
     print('testing',testing_matrix.shape)
+    shape = training_matrix.shape
+
+
+    result['vector_size'] = shape[1]
 
 
     # ## Classification by Logistic Regression of Scikit Learn
